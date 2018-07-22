@@ -1,3 +1,5 @@
+require "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/jenkins.rb"
+
 class PhatblatJenkins < Jenkins
   def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
