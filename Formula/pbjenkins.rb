@@ -1,6 +1,6 @@
 require "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/jenkins.rb"
 
-class PbJenkins < Jenkins
+class Pbjenkins < Jenkins
   desc "Extendable open source continuous integration server (phatblat's fork)"
 
   def plist; <<~EOS
