@@ -1,36 +1,4 @@
-class Jenkins < Formula
-  desc "Extendable open source continuous integration server"
-  homepage "https://jenkins.io/"
-  url "http://mirrors.jenkins.io/war/2.133/jenkins.war"
-  sha256 "f757aba25ce3dad017d94da24a21dd80a764533132edde00e46a1c293eef92f8"
-
-  head do
-    url "https://github.com/jenkinsci/jenkins.git"
-    depends_on "maven" => :build
-  end
-
-  bottle :unneeded
-
-  depends_on :java => "1.8"
-
-  def install
-    if build.head?
-      system "mvn", "clean", "install", "-pl", "war", "-am", "-DskipTests"
-    else
-      system "jar", "xvf", "jenkins.war"
-    end
-    libexec.install Dir["**/jenkins.war", "**/jenkins-cli.jar"]
-    bin.write_jar_script libexec/"jenkins.war", "jenkins", :java_version => "1.8"
-    bin.write_jar_script libexec/"jenkins-cli.jar", "jenkins-cli", :java_version => "1.8"
-  end
-
-  def caveats; <<~EOS
-    Note: When using launchctl the port will be 8080.
-  EOS
-  end
-
-  plist_options :manual => "jenkins"
-
+class PhatblatJenkins < Jenkins
   def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -53,24 +21,10 @@ class Jenkins < Formula
         </array>
         <key>RunAtLoad</key>
         <true/>
+        <key>UserName</key>
+        <string>jenkins</string>
       </dict>
     </plist>
   EOS
-  end
-
-  test do
-    ENV["JENKINS_HOME"] = testpath
-    ENV.prepend "_JAVA_OPTIONS", "-Djava.io.tmpdir=#{testpath}"
-    pid = fork do
-      exec "#{bin}/jenkins"
-    end
-    sleep 60
-
-    begin
-      assert_match /Welcome to Jenkins!|Unlock Jenkins|Authentication required/, shell_output("curl localhost:8080/")
-    ensure
-      Process.kill("SIGINT", pid)
-      Process.wait(pid)
-    end
   end
 end
