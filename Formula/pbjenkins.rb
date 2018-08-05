@@ -42,6 +42,9 @@ class Pbjenkins < Jenkins
         <string>#{plist_name}</string>
         <key>ProgramArguments</key>
         <array>
+          <string>sudo</string>
+          <string>-u</string>
+          <string>jenkins</string>
           <string>/usr/libexec/java_home</string>
           <string>-v</string>
           <string>1.8</string>
@@ -55,8 +58,6 @@ class Pbjenkins < Jenkins
         </array>
         <key>RunAtLoad</key>
         <true/>
-        <key>UserName</key>
-        <string>jenkins</string>
       </dict>
     </plist>
   EOS
