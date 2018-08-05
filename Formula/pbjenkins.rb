@@ -2,6 +2,36 @@ require "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/jenkins
 
 class Pbjenkins < Jenkins
   desc "Extendable open source continuous integration server (phatblat's fork)"
+  homepage "https://jenkins.io/"
+  url "http://mirrors.jenkins.io/war/2.135/jenkins.war"
+  sha256 "d682c43b381898fde9ace47892bdf9277ed2389f15299356e20e1a85720cdeb0"
+
+  head do
+    url "https://github.com/jenkinsci/jenkins.git"
+    depends_on "maven" => :build
+  end
+
+  bottle :unneeded
+
+  depends_on :java => "1.8"
+
+  def install
+    if build.head?
+      system "mvn", "clean", "install", "-pl", "war", "-am", "-DskipTests"
+    else
+      system "jar", "xvf", "jenkins.war"
+    end
+    libexec.install Dir["**/jenkins.war", "**/jenkins-cli.jar"]
+    bin.write_jar_script libexec/"jenkins.war", "jenkins", :java_version => "1.8"
+    bin.write_jar_script libexec/"jenkins-cli.jar", "jenkins-cli", :java_version => "1.8"
+  end
+
+  def caveats; <<~EOS
+    Note: When using launchctl the port will be 8080.
+  EOS
+  end
+
+  plist_options :manual => "jenkins"
 
   def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
@@ -30,5 +60,21 @@ class Pbjenkins < Jenkins
       </dict>
     </plist>
   EOS
+  end
+
+  test do
+    ENV["JENKINS_HOME"] = testpath
+    ENV.prepend "_JAVA_OPTIONS", "-Djava.io.tmpdir=#{testpath}"
+    pid = fork do
+      exec "#{bin}/jenkins"
+    end
+    sleep 60
+
+    begin
+      assert_match /Welcome to Jenkins!|Unlock Jenkins|Authentication required/, shell_output("curl localhost:8080/")
+    ensure
+      Process.kill("SIGINT", pid)
+      Process.wait(pid)
+    end
   end
 end
