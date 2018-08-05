@@ -3,7 +3,7 @@ require "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/jenkins
 class Pbjenkins < Jenkins
   desc "Extendable open source continuous integration server (phatblat's fork)"
   homepage "https://jenkins.io/"
-  url "http://mirrors.jenkins.io/war/2.135/jenkins.war"
+  url "http://mirrors.jenkins.io/war/2.136/jenkins.war"
   sha256 "d682c43b381898fde9ace47892bdf9277ed2389f15299356e20e1a85720cdeb0"
 
   head do
