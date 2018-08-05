@@ -1,3 +1,6 @@
+# 🍻 pbjenkins
+
+A slight modification of the jenkins homebrew formula to run as the `jenkins` user.
 
 # 📄 License
 
