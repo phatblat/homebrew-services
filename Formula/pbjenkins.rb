@@ -1,5 +1,4 @@
-# require "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/jenkins.rb"
-require "jenkins"
+require "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/jenkins.rb"
 
 class Pbjenkins < Jenkins
   desc "Extendable open source continuous integration server (phatblat's fork)"
