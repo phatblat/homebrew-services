@@ -15,4 +15,5 @@ Pods/
 bin/
 build/
 gradlew.bat
+jenkins.war
 xcuserdata
