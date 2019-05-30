@@ -15,9 +15,9 @@ curl \
     --fail \
     --location \
     --progress-bar \
-    --output $file \
-    $url
+    --output "$file" \
+    "$url"
 
 shasum \
     --algorithm 256 \
-    $file
+    "$file"
