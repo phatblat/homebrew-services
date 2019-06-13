@@ -58,6 +58,8 @@ class Pbjenkins < Jenkins
         </array>
         <key>RunAtLoad</key>
         <true/>
+        <key>WorkingDirectory</key>
+        <string>#{HOMEBREW_PREFIX}</string>
       </dict>
     </plist>
   EOS
