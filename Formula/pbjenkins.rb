@@ -42,7 +42,7 @@ class Pbjenkins < Jenkins
         <string>#{plist_name}</string>
         <key>ProgramArguments</key>
         <array>
-          <string>sudo</string>
+          <string>/usr/bin/sudo</string>
           <string>-u</string>
           <string>jenkins</string>
           <string>/usr/libexec/java_home</string>
