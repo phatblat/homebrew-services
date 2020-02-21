@@ -1,5 +1,8 @@
 #!/bin/bash -ex
 
+brew_home=/home/linuxbrew/.linuxbrew
+formula_path=$brew_home/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/
+
 /usr/bin/diff \
     Formula/pbjenkins.rb \
-    /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/jenkins.rb
+    $formula_path/jenkins.rb
