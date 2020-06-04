@@ -4,7 +4,7 @@ class Pbjenkins < Jenkins
   desc "Extendable open source continuous integration server (phatblat's fork)"
   homepage "https://jenkins.io/"
   url "http://mirrors.jenkins.io/war/2.238/jenkins.war"
-  ssha256 "a4407b10158acbf2be13a55ef6b4ca0e894c3628e0adc1464088768b5615f7b5"
+  sha256 "a4407b10158acbf2be13a55ef6b4ca0e894c3628e0adc1464088768b5615f7b5"
 
   head do
     url "https://github.com/jenkinsci/jenkins.git"
